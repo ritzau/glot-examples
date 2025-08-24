@@ -1,0 +1,8 @@
+[package]
+name = "hello-rust-polyglot"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "hello-rust-polyglot"
+path = "src/main.rs"
