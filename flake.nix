@@ -18,8 +18,8 @@
         project = csharpLib {
           inherit pkgs self;
           sdk = pkgs.dotnet-sdk_8;
+          buildTarget = "hello-csharp.csproj";
         };
-
       in {
         devShells.default = project.devShell;
         packages.default = project.package;
