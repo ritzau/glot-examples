@@ -42,11 +42,10 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1756109169,
-        "narHash": "sha256-ulf2kpI5hXn/ac2YUHJXYXadN7eAatJuvqs/TJL8X2w=",
-        "ref": "refs/heads/main",
-        "rev": "6267c2418c63267d4fd1ff2a54727f97236f6b77",
-        "revCount": 7,
+        "dirtyRev": "d9c7166980fe1894b5a4e49a435d9c554d5751ae-dirty",
+        "dirtyShortRev": "d9c7166-dirty",
+        "lastModified": 1756120294,
+        "narHash": "sha256-dGwiBfPIVLyruU7iatFY6CMp4AyfC/CmQRA9aiOJPkc=",
         "type": "git",
         "url": "file:///Users/ritzau/src/slask/aoc/nix-polyglot"
       },

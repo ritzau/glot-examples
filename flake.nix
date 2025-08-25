@@ -18,37 +18,16 @@
         project = csharpLib {
           inherit pkgs self;
           sdk = pkgs.dotnet-sdk_8;
-          buildTarget = "hello-csharp.csproj";
+          buildTarget = "HelloService/HelloService.csproj";
+          testProject = "HelloService.Tests/HelloService.Tests.csproj";
+          nugetDeps = ./deps.json;
         };
       in {
         devShells.default = project.devShell;
         packages.default = project.package;
         apps.default = project.app;
-        
-        checks = {
-          # Build check  
-          build = project.package;
-          
-          # Unit test check using solution file approach
-          test = pkgs.writeShellApplication {
-            name = "hello-csharp-unit-tests";
-            runtimeInputs = [ pkgs.dotnet-sdk_8 ];
-            text = ''
-              echo "Running C# unit tests via development environment..."
-              cd ${./.}
-              
-              # Check if tests can be run in dev environment
-              if [ -f "tests/HelloService.Tests.csproj" ]; then
-                echo "Running separate test project..."
-                cd tests
-                dotnet test HelloService.Tests.csproj --logger "console;verbosity=detailed"
-                echo "✅ All C# unit tests completed successfully!"
-              else
-                echo "❌ Test project not found"
-                exit 1
-              fi
-            '';
-          };
-        };
+
+        # Use checks from the enhanced csharp.nix (includes auto-detected tests)
+        checks = project.checks;
       });
 }

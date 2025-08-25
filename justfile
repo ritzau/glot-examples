@@ -42,7 +42,7 @@ check: build test lint
 # Clean build artifacts
 clean:
     @echo "🧹 Cleaning build artifacts..."
-    @rm -rf target/ bin/ obj/ node_modules/.cache/ __pycache__/ result result-* .mypy_cache/ .pytest_cache/ 2>/dev/null || true
+    @rm -rf target/ bin/ obj/ build/ node_modules/.cache/ __pycache__/ result result-* .mypy_cache/ .pytest_cache/ 2>/dev/null || true
     @echo "Clean completed!"
 
 # Update dependencies
@@ -50,6 +50,12 @@ update:
     @echo "📦 Updating dependencies..."
     nix flake update
     @echo "Dependencies updated!"
+
+# Regenerate NuGet dependencies
+update-nuget:
+    @echo "📦 Regenerating NuGet dependencies..."
+    @python3 generate-deps.py
+    @echo "NuGet dependencies updated!"
 
 # Show project info
 info:
