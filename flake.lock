@@ -42,16 +42,17 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "dirtyRev": "d9c7166980fe1894b5a4e49a435d9c554d5751ae-dirty",
-        "dirtyShortRev": "d9c7166-dirty",
-        "lastModified": 1756120294,
+        "lastModified": 1756155315,
         "narHash": "sha256-dGwiBfPIVLyruU7iatFY6CMp4AyfC/CmQRA9aiOJPkc=",
-        "type": "git",
-        "url": "file:///Users/ritzau/src/slask/aoc/nix-polyglot"
+        "owner": "ritzau",
+        "repo": "nix-polyglot",
+        "rev": "0d624f1dc921ade3174c05684c4f354bbaf10a82",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "file:///Users/ritzau/src/slask/aoc/nix-polyglot"
+        "owner": "ritzau",
+        "repo": "nix-polyglot",
+        "type": "github"
       }
     },
     "nixpkgs": {
