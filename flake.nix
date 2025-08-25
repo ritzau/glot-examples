@@ -15,6 +15,7 @@
 
         csharpLib = nix-polyglot.lib.csharp;
 
+        # Base project configuration
         project = csharpLib {
           inherit pkgs self;
           sdk = pkgs.dotnet-sdk_8;
@@ -24,8 +25,18 @@
         };
       in {
         devShells.default = project.devShell;
+        
+        # Default package is the standard build (typically Debug in .NET)
         packages.default = project.package;
+        packages.dev = project.package;  # Same as default - Debug build
+        
+        # For now, release build is the same until we can extend the library
+        packages.release = project.package;
+
+        # Apps
         apps.default = project.app;
+        apps.dev = project.app;
+        apps.release = project.app;
 
         # Use checks from the enhanced csharp.nix (includes auto-detected tests)
         checks = project.checks;
