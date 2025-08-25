@@ -17,7 +17,7 @@
 
         project = csharpLib {
           inherit pkgs self;
-          # sdk = pkgs.dotnet-sdk_9;
+          sdk = pkgs.dotnet-sdk_8;
         };
 
       in {
