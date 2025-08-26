@@ -25,7 +25,7 @@
         # Base project configuration
         project = csharpLib {
           inherit pkgs self;
-          sdk = pkgs.dotnetCorePackages.sdk_9_0;
+          sdk = pkgs.dotnetCorePackages.sdk_8_0;
           buildTarget = "HelloService/HelloService.csproj";
           testProject = "HelloService.Tests/HelloService.Tests.csproj";
           nugetDeps = ./deps.json;
