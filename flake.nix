@@ -8,8 +8,15 @@
     nix-polyglot.url = "git+file:///Users/ritzau/src/slask/nix/polyglot/nix-polyglot";
   };
 
-  outputs = { self, nixpkgs, flake-utils, nix-polyglot }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      nix-polyglot,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
 
@@ -23,5 +30,7 @@
           testProject = "HelloService.Tests/HelloService.Tests.csproj";
           nugetDeps = ./deps.json;
         };
-      in project.mkDefaultOutputs);
+      in
+      project.mkDefaultOutputs
+    );
 }
