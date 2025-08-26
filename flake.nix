@@ -25,5 +25,6 @@
         devShells.default = project.devShell;
         packages.default = project.package;
         apps.default = project.app;
+        checks = project.checks;
       });
 }
