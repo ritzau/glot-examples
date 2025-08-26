@@ -21,10 +21,5 @@
           binaryName = "hello-rust-polyglot";
         };
 
-      in {
-        devShells.default = project.devShell;
-        packages.default = project.package;
-        apps.default = project.app;
-        checks = project.checks;
-      });
+      in project.mkDefaultOutputs);
 }
