@@ -1,7 +1,14 @@
 fn main() {
     println!("Hello, World from Rust via Nix-Polyglot! 🦀");
     println!("This demonstrates the organizational infrastructure approach.");
-    
+
+    // Print build mode information
+    #[cfg(debug_assertions)]
+    println!("🔧 Running DEBUG build (dev mode)");
+
+    #[cfg(not(debug_assertions))]
+    println!("🚀 Running RELEASE build (optimized)");
+
     // Simple loop to show it actually works
     for i in 0..5 {
         println!("Count: {}", i);

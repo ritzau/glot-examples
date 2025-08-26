@@ -4,11 +4,19 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
-    nix-polyglot.url = "git+file:///Users/ritzau/src/slask/aoc/nix-polyglot";
+    # nix-polyglot.url = "github:ritzau/nix-polyglot";
+    nix-polyglot.url = "git+file:///Users/ritzau/src/slask/nix/polyglot/nix-polyglot";
   };
 
-  outputs = { self, nixpkgs, flake-utils, nix-polyglot }:
-    flake-utils.lib.eachDefaultSystem (system:
+  outputs =
+    {
+      self,
+      nixpkgs,
+      flake-utils,
+      nix-polyglot,
+    }:
+    flake-utils.lib.eachDefaultSystem (
+      system:
       let
         pkgs = nixpkgs.legacyPackages.${system};
 
@@ -21,5 +29,7 @@
           binaryName = "hello-rust-polyglot";
         };
 
-      in project.mkDefaultOutputs);
+      in
+      project.mkDefaultOutputs
+    );
 }
