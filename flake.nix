@@ -5,15 +5,15 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
     # nix-polyglot.url = "github:ritzau/nix-polyglot";
-    nix-polyglot.url = "git+file:///Users/ritzau/src/slask/nix/polyglot/nix-polyglot";
+    nix-polyglot.url = "path:/Users/ritzau/src/slask/nix/polyglot/nix-polyglot";
   };
 
   outputs =
-    {
-      self,
-      nixpkgs,
-      flake-utils,
-      nix-polyglot,
+    { self
+    , nixpkgs
+    , flake-utils
+    , nix-polyglot
+    ,
     }:
     flake-utils.lib.eachDefaultSystem (
       system:
@@ -24,7 +24,7 @@
 
         # Base project configuration
         project = csharpLib {
-          inherit pkgs self;
+          inherit pkgs self system;
           sdk = pkgs.dotnetCorePackages.sdk_8_0;
           buildTarget = "HelloService/HelloService.csproj";
           testProject = "HelloService.Tests/HelloService.Tests.csproj";
