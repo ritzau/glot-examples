@@ -102,8 +102,8 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1756314312,
-        "narHash": "sha256-S+i/e/YaEzbxP1qRp8P/Rio1JkLJbMiQFNFZu9IulSY=",
+        "lastModified": 1756413596,
+        "narHash": "sha256-IcDr//RAQVmUvQ2KV5quCwfJwH9jYWc97j60aLMher4=",
         "path": "/Users/ritzau/src/slask/nix/polyglot/nix-polyglot",
         "type": "path"
       },
