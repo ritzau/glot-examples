@@ -5,8 +5,8 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
     nix-polyglot = {
-      url = "github:your-org/nix-polyglot"; # Update this URL
-      # For local development, use: url = "path:/path/to/nix-polyglot";
+      # url = "github:your-org/nix-polyglot"; # Update this URL
+      url = "path:/Users/ritzau/src/slask/nix/polyglot/nix-polyglot";
     };
   };
 
