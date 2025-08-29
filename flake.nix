@@ -31,6 +31,6 @@
           nugetDeps = ./deps.json;
         };
       in
-      project.mkDefaultOutputs
+      project.defaultOutputs
     );
 }
