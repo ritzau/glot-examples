@@ -50,9 +50,7 @@ glot() {
             _glot_help "$1"
             ;;
         "")
-            echo "glot: missing command"
-            echo "Try 'glot help' for usage information."
-            return 1
+            _glot_help
             ;;
         *)
             echo "glot: unknown command '$cmd'"
@@ -107,9 +105,9 @@ _glot_build() {
 
     echo "🔨 Building..."
     if [[ "$variant" == "release" ]]; then
-        nix build
+        nix build .#release
     else
-        nix build
+        nix build .#dev
     fi
 }
 
@@ -162,7 +160,11 @@ _glot_run() {
     done
 
     echo "▶️  Running..."
-    nix run "${run_args[@]}"
+    if [[ "$variant" == "release" ]]; then
+        nix run .#release "${run_args[@]}"
+    else
+        nix run .#dev "${run_args[@]}"
+    fi
 }
 
 _glot_info() {
