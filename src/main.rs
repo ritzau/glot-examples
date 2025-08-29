@@ -1,6 +1,7 @@
 fn main() {
     println!("Hello, World from Rust via Nix-Polyglot! 🦀");
     println!("This demonstrates the organizational infrastructure approach.");
+    println!("Now with glot CLI support!");
 
     // Print build mode information
     #[cfg(debug_assertions)]
