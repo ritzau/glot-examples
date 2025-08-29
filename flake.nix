@@ -60,7 +60,12 @@
 
       in
       project.defaultOutputs // {
-        # Add install-hooks app
+        # Add packages - merge with existing packages from defaultOutputs
+        packages = project.defaultOutputs.packages // {
+          glot-cli = nix-polyglot.packages.${system}.glot;
+        };
+
+        # Add install-hooks app - merge with existing apps from defaultOutputs
         apps = project.defaultOutputs.apps // {
           install-hooks = {
             type = "app";
