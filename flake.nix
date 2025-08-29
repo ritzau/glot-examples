@@ -30,6 +30,6 @@
         };
 
       in
-      project.mkDefaultOutputs
+      project.defaultOutputs
     );
 }

@@ -102,11 +102,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1756468636,
-        "narHash": "sha256-IN7vZdC0RfJrymbS4UxOCf4w77F9rUNkP4ufpYMqMpA=",
+        "lastModified": 1756474552,
+        "narHash": "sha256-PlhKlq4yIgoL6C0zXgoNv6A3IrDg6isfd/+bTNiV4l0=",
         "ref": "refs/heads/main",
-        "rev": "8064ac6a202ed7d6aad32ba6a73cc5ed1d1bc004",
-        "revCount": 50,
+        "rev": "1854872b71bd64ec9d3f17757babab1f2aacd77a",
+        "revCount": 51,
         "type": "git",
         "url": "file:///Users/ritzau/src/slask/nix/polyglot/nix-polyglot"
       },
