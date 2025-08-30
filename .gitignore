@@ -73,5 +73,6 @@ Thumbs.db
 result
 result-*
 .direnv/
+.cache/
 
 /.pre-commit-config.yaml

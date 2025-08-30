@@ -4,10 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
-    nix-polyglot = {
-      # url = "github:your-org/nix-polyglot"; # Update this URL
-      url = "path:/Users/ritzau/src/slask/nix/polyglot/nix-polyglot";
-    };
+    nix-polyglot.url = "git+file:///Users/ritzau/src/slask/nix/polyglot/nix-polyglot";
   };
 
   outputs = { self, nixpkgs, flake-utils, nix-polyglot, ... }:
@@ -26,6 +23,11 @@
         };
       in
       # Use the complete project structure
-      pythonProject.defaultOutputs
+      pythonProject.defaultOutputs // {
+        # Add packages - merge with existing packages from defaultOutputs
+        packages = pythonProject.defaultOutputs.packages // {
+          glot-cli = nix-polyglot.packages.${system}.glot;
+        };
+      }
     );
 }
