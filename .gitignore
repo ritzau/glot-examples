@@ -2,5 +2,8 @@
 /obj/
 /build/
 /result
+/result-*
 /node_modules/
+.direnv/
+.cache/
 /.pre-commit-config.yaml

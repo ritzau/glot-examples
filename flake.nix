@@ -4,8 +4,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
     flake-utils.url = "github:numtide/flake-utils";
-    # nix-polyglot.url = "github:ritzau/nix-polyglot";
-    nix-polyglot.url = "path:/Users/ritzau/src/slask/nix/polyglot/nix-polyglot";
+    nix-polyglot.url = "git+file:///Users/ritzau/src/slask/nix/polyglot/nix-polyglot";
   };
 
   outputs =
@@ -31,6 +30,11 @@
           nugetDeps = ./deps.json;
         };
       in
-      project.defaultOutputs
+      project.defaultOutputs // {
+        # Add packages - merge with existing packages from defaultOutputs
+        packages = project.defaultOutputs.packages // {
+          glot-cli = nix-polyglot.packages.${system}.glot;
+        };
+      }
     );
 }
