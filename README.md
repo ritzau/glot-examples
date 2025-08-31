@@ -14,13 +14,15 @@ Build specific example:
 nix build .#rust-cli
 nix build .#python-console
 nix build .#csharp-console
+nix build .#cpp-cli
 ```
 
 ## Examples
 
-- **rust-cli**: Rust CLI application with glot integration
+- **rust-cli**: Rust CLI application with Cargo integration
 - **python-console**: Python console app with Poetry
 - **csharp-console**: C# console app with .NET 8
+- **cpp-cli**: C++ CLI application with CMake
 
 Each example demonstrates:
 - Complete nix-polyglot integration

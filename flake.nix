@@ -140,6 +140,11 @@
             program = "${self.packages.${system}.csharp-console}/bin/HelloService";
           };
           
+          cpp-cli = {
+            type = "app";
+            program = "${self.packages.${system}.cpp-cli}/bin/hello-cpp";
+          };
+          
           # Default app shows all available examples
           default = {
             type = "app";
@@ -153,6 +158,7 @@
               echo "  nix run .#rust-cli        - Rust CLI application"
               echo "  nix run .#python-console  - Python console application"
               echo "  nix run .#csharp-console  - C# console application"
+              echo "  nix run .#cpp-cli         - C++ CLI application"
               echo ""
               echo "Build examples:"
               echo "  nix build                 - Build all examples"

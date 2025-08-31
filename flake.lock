@@ -102,11 +102,11 @@
         "treefmt-nix": "treefmt-nix"
       },
       "locked": {
-        "lastModified": 1756640280,
-        "narHash": "sha256-lmSpwwa5ylIXPW4ble2JHKq/DshyU6ke/vLZCB5M0nA=",
+        "lastModified": 1756675367,
+        "narHash": "sha256-G6ur0Bmtlo0klvN79Ns8CYOiWo/smLzaOy18vZrjRMg=",
         "ref": "refs/heads/main",
-        "rev": "95c76019abd412c923934353e465d8760b2a6f3e",
-        "revCount": 68,
+        "rev": "9da36ddf787475a3dd3791a84db7f95a963275c6",
+        "revCount": 72,
         "type": "git",
         "url": "file:///Users/ritzau/src/slask/nix/polyglot/nix-polyglot"
       },
@@ -165,11 +165,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1756469547,
-        "narHash": "sha256-YvtD2E7MYsQ3r7K9K2G7nCslCKMPShoSEAtbjHLtH0k=",
+        "lastModified": 1756617294,
+        "narHash": "sha256-aGnd4AHIYCWQKChAkHPpX+YYCt7pA6y2LFFA/s8q0wQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "41d292bfc37309790f70f4c120b79280ce40af16",
+        "rev": "b4c2c57c31e68544982226d07e4719a2d86302a8",
         "type": "github"
       },
       "original": {
