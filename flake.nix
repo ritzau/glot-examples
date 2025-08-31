@@ -2,46 +2,48 @@
   description = "Glot Examples - Showcase of nix-polyglot capabilities across multiple languages";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nix-polyglot.url = "github:ritzau/nix-polyglot";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";
+    flake-utils.url = "github:numtide/flake-utils";
+    # Point to local nix-polyglot for development
+    nix-polyglot.url = "git+file:///Users/ritzau/src/slask/nix/polyglot/nix-polyglot";
   };
 
-  outputs = { self, nixpkgs, nix-polyglot, ... }:
-    let
-      system = "x86_64-darwin"; # Update based on your system
-      pkgs = nixpkgs.legacyPackages.${system};
-      
-      # Import each example's flake outputs
-      rustExample = import ./rust-cli/flake.nix { inherit nixpkgs nix-polyglot; };
-      pythonExample = import ./python-console/flake.nix { inherit nixpkgs nix-polyglot; };
-      csharpExample = import ./csharp-console/flake.nix { inherit nixpkgs nix-polyglot; };
-      
-      # Helper to get outputs for current system
-      getOutputs = flake: flake.outputs { inherit self nixpkgs nix-polyglot; };
-    in {
-      packages.${system} = 
-        let
-          rustOutputs = getOutputs rustExample;
-          pythonOutputs = getOutputs pythonExample;  
-          csharpOutputs = getOutputs csharpExample;
-        in {
+  outputs = { self, nixpkgs, flake-utils, nix-polyglot, ... }:
+    flake-utils.lib.eachDefaultSystem (system: 
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+        
+        # Each example is its own flake with all necessary inputs
+        rustExample = (import ./rust-cli/flake.nix).outputs {
+          inherit self nixpkgs flake-utils nix-polyglot;
+        };
+        
+        pythonExample = (import ./python-console/flake.nix).outputs {
+          inherit self nixpkgs flake-utils nix-polyglot;
+        };
+        
+        csharpExample = (import ./csharp-console/flake.nix).outputs {
+          inherit self nixpkgs flake-utils nix-polyglot;
+        };
+      in {
+        packages = {
           # Individual example packages
-          rust-cli = rustOutputs.packages.${system}.default;
-          rust-cli-release = rustOutputs.packages.${system}.release;
+          rust-cli = rustExample.packages.${system}.default;
+          rust-cli-release = rustExample.packages.${system}.release;
           
-          python-console = pythonOutputs.packages.${system}.default;
-          python-console-release = pythonOutputs.packages.${system}.release;
+          python-console = pythonExample.packages.${system}.default;
+          python-console-release = pythonExample.packages.${system}.release;
           
-          csharp-console = csharpOutputs.packages.${system}.default;
-          csharp-console-release = csharpOutputs.packages.${system}.release;
+          csharp-console = csharpExample.packages.${system}.default;
+          csharp-console-release = csharpExample.packages.${system}.release;
           
           # Default package builds all examples
           default = pkgs.symlinkJoin {
             name = "glot-examples";
             paths = [
-              rustOutputs.packages.${system}.default
-              pythonOutputs.packages.${system}.default
-              csharpOutputs.packages.${system}.default
+              rustExample.packages.${system}.default
+              pythonExample.packages.${system}.default
+              csharpExample.packages.${system}.default
             ];
             meta = {
               description = "All glot examples combined";
@@ -56,9 +58,9 @@
           release = pkgs.symlinkJoin {
             name = "glot-examples-release";
             paths = [
-              rustOutputs.packages.${system}.release
-              pythonOutputs.packages.${system}.release  
-              csharpOutputs.packages.${system}.release
+              rustExample.packages.${system}.release
+              pythonExample.packages.${system}.release  
+              csharpExample.packages.${system}.release
             ];
             meta = {
               description = "All glot examples (release builds)";
@@ -66,19 +68,15 @@
           };
         };
 
-      # Development shells for each example
-      devShells.${system} = 
-        let
-          rustOutputs = getOutputs rustExample;
-          pythonOutputs = getOutputs pythonExample;
-          csharpOutputs = getOutputs csharpExample;
-        in {
+        # Development shells for each example plus a root shell
+        devShells = {
           default = pkgs.mkShell {
             packages = with pkgs; [ 
               # Tools for working with all examples
-              glot
+              nix-polyglot.packages.${system}.glot
               direnv
               git
+              just  # For legacy samples that still use justfiles
             ];
             shellHook = ''
               echo "🚀 Glot Examples Development Environment"
@@ -91,52 +89,65 @@
               echo "Commands:"
               echo "  nix build                    - Build all examples"
               echo "  nix build .#rust-cli         - Build specific example"
+              echo "  cd <example> && direnv allow - Enable glot CLI in example"
               echo "  cd <example> && glot build   - Build using glot CLI"
+              echo ""
+              echo "Run examples:"
+              echo "  nix run .#rust-cli           - Run Rust example"
+              echo "  nix run .#python-console     - Run Python example"
+              echo "  nix run .#csharp-console     - Run C# example"
             '';
           };
           
-          rust = rustOutputs.devShells.${system}.default;
-          python = pythonOutputs.devShells.${system}.default;
-          csharp = csharpOutputs.devShells.${system}.default;
+          rust = rustExample.devShells.${system}.default;
+          python = pythonExample.devShells.${system}.default;
+          csharp = csharpExample.devShells.${system}.default;
         };
 
-      # Apps to run examples
-      apps.${system} = {
-        rust-cli = {
-          type = "app";
-          program = "${self.packages.${system}.rust-cli}/bin/hello-rust-polyglot";
+        # Apps to run examples
+        apps = {
+          rust-cli = {
+            type = "app";
+            program = "${self.packages.${system}.rust-cli}/bin/hello-rust-polyglot";
+          };
+          
+          python-console = {
+            type = "app"; 
+            program = "${self.packages.${system}.python-console}/bin/myapp";
+          };
+          
+          csharp-console = {
+            type = "app";
+            program = "${self.packages.${system}.csharp-console}/bin/HelloService";
+          };
+          
+          # Default app shows all available examples
+          default = {
+            type = "app";
+            program = pkgs.writeShellScript "glot-examples" ''
+              echo "🚀 Glot Examples - Nix-Polyglot Showcase"
+              echo ""
+              echo "This repository demonstrates nix-polyglot capabilities across multiple"
+              echo "programming languages, each with complete git history preserved."
+              echo ""
+              echo "Available examples:"
+              echo "  nix run .#rust-cli        - Rust CLI application"
+              echo "  nix run .#python-console  - Python console application"
+              echo "  nix run .#csharp-console  - C# console application"
+              echo ""
+              echo "Build examples:"
+              echo "  nix build                 - Build all examples"
+              echo "  nix build .#rust-cli      - Build specific example"
+              echo "  nix build .#release       - Build all examples (optimized)"
+              echo ""
+              echo "Development:"
+              echo "  nix develop               - Enter root development shell"
+              echo "  nix develop .#rust        - Enter Rust development shell"
+              echo "  cd <example> && direnv allow - Setup glot CLI in example"
+              echo ""
+              echo "Each example includes full glot CLI integration for unified development."
+            '';
+          };
         };
-        
-        python-console = {
-          type = "app"; 
-          program = "${self.packages.${system}.python-console}/bin/python-polyglot";
-        };
-        
-        csharp-console = {
-          type = "app";
-          program = "${self.packages.${system}.csharp-console}/bin/CSharpPolyglot";
-        };
-        
-        # Default app shows all available examples
-        default = {
-          type = "app";
-          program = pkgs.writeShellScript "glot-examples" ''
-            echo "🚀 Glot Examples"
-            echo ""
-            echo "Available examples:"
-            echo "  nix run .#rust-cli        - Run Rust CLI example"
-            echo "  nix run .#python-console  - Run Python console example"
-            echo "  nix run .#csharp-console  - Run C# console example"
-            echo ""
-            echo "Build examples:"
-            echo "  nix build                 - Build all examples"
-            echo "  nix build .#rust-cli      - Build specific example"
-            echo ""
-            echo "Development:"
-            echo "  nix develop               - Enter development shell"
-            echo "  cd <example> && glot help - Use glot CLI in example"
-          '';
-        };
-      };
-    };
+      });
 }
