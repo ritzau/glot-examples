@@ -124,7 +124,7 @@
           # Default app shows all available examples
           default = {
             type = "app";
-            program = pkgs.writeShellScript "glot-examples" ''
+            program = "${pkgs.writeShellScript "glot-examples" ''
               echo "🚀 Glot Examples - Nix-Polyglot Showcase"
               echo ""
               echo "This repository demonstrates nix-polyglot capabilities across multiple"
@@ -146,7 +146,7 @@
               echo "  cd <example> && direnv allow - Setup glot CLI in example"
               echo ""
               echo "Each example includes full glot CLI integration for unified development."
-            '';
+            ''}";
           };
         };
       });
