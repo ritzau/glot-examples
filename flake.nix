@@ -31,6 +31,12 @@
           self = csharpFlakeFunc // { outPath = ./csharp-console; }; 
           inherit nixpkgs flake-utils nix-polyglot; 
         };
+        
+        cppFlakeFunc = import (./cpp-cli + "/flake.nix");
+        cppExample = cppFlakeFunc.outputs { 
+          self = cppFlakeFunc // { outPath = ./cpp-cli; }; 
+          inherit nixpkgs flake-utils nix-polyglot; 
+        };
       in {
         packages = {
           # Individual example packages
@@ -43,6 +49,9 @@
           csharp-console = csharpExample.packages.${system}.default;
           csharp-console-release = csharpExample.packages.${system}.release;
           
+          cpp-cli = cppExample.packages.${system}.default;
+          cpp-cli-release = cppExample.packages.${system}.release;
+          
           # Default package builds all examples
           default = pkgs.symlinkJoin {
             name = "glot-examples";
@@ -50,6 +59,7 @@
               rustExample.packages.${system}.default
               pythonExample.packages.${system}.default
               csharpExample.packages.${system}.default
+              cppExample.packages.${system}.default
             ];
             meta = {
               description = "All glot examples combined";
@@ -67,6 +77,7 @@
               rustExample.packages.${system}.release
               pythonExample.packages.${system}.release  
               csharpExample.packages.${system}.release
+              cppExample.packages.${system}.release
             ];
             meta = {
               description = "All glot examples (release builds)";
@@ -91,6 +102,7 @@
               echo "  rust-cli/       - Rust CLI application"
               echo "  python-console/ - Python console application"  
               echo "  csharp-console/ - C# console application"
+              echo "  cpp-cli/        - C++ CLI application with CMake"
               echo ""
               echo "Commands:"
               echo "  nix build                    - Build all examples"
@@ -102,6 +114,7 @@
               echo "  nix run .#rust-cli           - Run Rust example"
               echo "  nix run .#python-console     - Run Python example"
               echo "  nix run .#csharp-console     - Run C# example"
+              echo "  nix run .#cpp-cli            - Run C++ example"
             '';
           };
           
