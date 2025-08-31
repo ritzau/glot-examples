@@ -1,0 +1,11 @@
+<Project>
+  <PropertyGroup>
+    <!-- All projects output to solution-level build directory -->
+    <OutputPath>$(MSBuildThisFileDirectory)build\bin\$(Configuration)\</OutputPath>
+    <BaseIntermediateOutputPath>$(MSBuildThisFileDirectory)build\obj\$(MSBuildProjectName)\</BaseIntermediateOutputPath>
+
+    <!-- Clean up path generation -->
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+  </PropertyGroup>
+</Project>
